@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+</head>
+<body>
+
+
+<script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script>
+
+
+
+
+
+<script type="text/javascript">
+console.log(CurrencyConvetor(9000,USD,INR));
+    function CurrencyConvetor(amount, from, to) {
+    var result = '';
+    var url = "https://www.google.com/finance/converter?a=" + amount + "&from=" + from + "&to=" + to;
+    $.ajaxSetup({async: false});
+    $.get(url,
+        function (data) {
+            var startPos = data.search('<div id=currency_converter_result>');
+            var endPos = data.search('<input type=submit value="Convert">');
+            if (startPos > 0) {
+                result = data.substring(startPos, endPos);
+                result = result.replace('<div id=currency_converter_result>', '');
+                result = result.replace('<span class=bld>', '');
+                result = result.replace('</span>', '');
+            }
+    })
+    return result;
+}
+</script>
+</body>
+</html>
